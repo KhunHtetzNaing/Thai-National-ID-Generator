@@ -1,0 +1,113 @@
+﻿Version=5.8
+NumberOfModules=2
+Module1=About
+Module2=Starter
+Build1=Default,com.anonymous.thaiidgenerator
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="19"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~'AdMob~\n~AddApplicationText(~\n~<meta-data android:name="com.google.android.gms.version"~\n~  android:value="@integer/google_play_services_version"/>~\n~<activity android:name="com.google.android.gms.ads.AdActivity"~\n~  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>~\n~)~\n~'End of AdMob~\n~
+IconFile=
+NumberOfFiles=3
+File1=1.bal
+File2=logo.png
+File3=thaiid.html
+NumberOfLibraries=7
+Library1=core
+Library2=webviewextras
+Library3=stringutils
+Library4=phone
+Library5=mlfiles
+Library6=admob
+Library7=mwadmobinterstitial2
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: Thai ID Generator
+	#VersionCode: 1
+	#VersionName: 1.0
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+	#AdditionalRes: C:\Android\SDK\extras\google\google-play-services\libproject\google-play-services_lib\res, com.google.android.gms
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+
+End Sub
+
+Sub Globals
+	Dim thaiid As WebView
+	Dim colorbg As ColorDrawable
+	Dim lblfooter As Label
+	Dim lbltitle As Label
+	Dim su As StringUtils
+	Dim AdView1 As AdView
+	Dim av As AdView
+
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	 
+     AdView1.Initialize("Ad", "ca-app-pub-4173348573252986/9374334952")
+     Activity.AddView(AdView1, 0%x, 50%y, 80%x,40%y)
+     AdView1.LoadAd
+	 
+	  av.Initialize("Av", "ca-app-pub-4173348573252986/9873862553")
+    Activity.AddView(av, 0dip, 320dip, 320dip, 50dip)
+   av.LoadAd
+
+    lbltitle.Initialize ("")
+	lbltitle.Text = "Thai ID Number Generator"
+	lbltitle.TextColor = Colors.RGB (0,157,233)
+	lbltitle.TextSize = 23
+	lbltitle.Gravity = Gravity.CENTER 
+	Activity.AddView (lbltitle, 10dip , 10dip , 100%x - 20dip , 50dip )
+	lbltitle.Height = su.MeasureMultilineTextHeight (lbltitle, lbltitle.Text )
+	
+	colorbg.Initialize(Colors.White,1)
+	thaiid.Initialize("thaiid")
+	Activity.Background = colorbg
+thaiid.LoadUrl("file:///android_asset/thaiid.html")
+Activity.AddView(thaiid,0%x,10%y,100%x,40%y)
+Activity.AddMenuItem("About","about")
+
+lblfooter.Initialize("lblfooter")
+lblfooter.Text = "Developed By @nonymous"
+lblfooter.TextColor = Colors.Blue
+lblfooter.Gravity = Gravity.CENTER
+Activity.AddView(lblfooter,10dip, 100%y - 35dip , 100%x - 20dip ,40dip)
+End Sub
+
+Sub Ad_FailedToReceiveAd (ErrorCode As String)
+    Log("failed: " & ErrorCode)
+End Sub
+Sub Ad_ReceiveAd
+    Log("received")
+End Sub
+Sub Ad_AdScreenDismissed
+   Log("screen dismissed")
+End Sub
+
+Sub av_FailedToReceiveAd (ErrorCode As String)
+    Log("failed: " & ErrorCode)
+End Sub
+Sub av_ReceiveAd
+    Log("received")
+End Sub
+Sub av_AdScreenDismissed
+   Log("screen dismissed")
+End Sub
+
+Sub about_Click
+	StartActivity(About)
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
